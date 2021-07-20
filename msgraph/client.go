@@ -78,7 +78,7 @@ type Client struct {
 	// This does not impact handling of retries related to rate limiting, which are always performed.
 	DisableRetries bool
 
-	httpClient *http.Client
+	HttpClient *http.Client
 }
 
 // NewClient returns a new Client configured with the specified API version and tenant ID.
@@ -88,7 +88,7 @@ func NewClient(apiVersion ApiVersion, tenantId string) Client {
 		ApiVersion: apiVersion,
 		TenantId:   tenantId,
 		UserAgent:  "Hamilton (Go-http-client/1.1)",
-		httpClient: &http.Client{},
+		HttpClient: &http.Client{},
 	}
 }
 
@@ -164,7 +164,7 @@ func (c Client) performRequest(req *http.Request, input HttpRequestInput) (*http
 		}
 
 		req.Body = io.NopCloser(bytes.NewBuffer(reqBody))
-		resp, err = c.httpClient.Do(req)
+		resp, err = c.HttpClient.Do(req)
 		if err != nil {
 			return nil, status, nil, err
 		}
